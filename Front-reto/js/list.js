@@ -4,7 +4,7 @@ const d = document,
     $crear = d.getElementById("crear"),
     body = d.querySelector('.tbody1'),
     $input = d.getElementById('inputTarea').value
-const url = '';
+const url = 'http://localhost:8080';
 let resultado = ''
 let resultadoSub = ''
 let subtarea = {};
@@ -12,21 +12,25 @@ let subtarea = {};
 
 //funcon boton crear , permite guardar en el input el nombre de la nueva lista a crear
 $crear.addEventListener('click', e => {
+    // console.log($crear);
     e.preventDefault();
     crearList(d.getElementById('inputTarea').value)
 
-})
+});
 //Funcion crear lista , consulta la ruta del fetch y realiza el metodo post con los datos 
 async function crearList(lista) {
     if (lista) {
         let options = {
             method: "POST",
-            
+            headers: {
+              "Content-type": "application/json; charset=utf-8"
+            },
             body: JSON.stringify({
                 name: lista
             })
         },
             res = await fetch(`${url}/task`, options)
+            json = await res.json();
         mostrarList();
     } else {
         alert("ingrese una tarea por favor!")
@@ -87,10 +91,10 @@ const mostrar = (listas) => {
             </table>
         </div>
         `
-    })
+    });
     document.querySelector('.tbody1').innerHTML = resultado;
     resultado = "";
-}
+};
 
 
 body.addEventListener("click", (e) => {
@@ -192,7 +196,7 @@ async function eliminarSubTarea(id) {
     let options = {
         method: "DELETE",
         
-    mostrarList()
+    // mostrarList()
 }
 /**
  * Editar sub lista 
@@ -211,4 +215,4 @@ async function eliminarSubTarea(id) {
 
 
 
-
+}
