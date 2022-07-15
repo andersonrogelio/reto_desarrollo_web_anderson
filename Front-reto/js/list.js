@@ -4,8 +4,8 @@ const d = document,
     $crear = d.getElementById("crear"),
     body = d.querySelector('.tbody1'),
     $input = d.getElementById('inputTarea').value
-// const url = 'http://localhost:8080';
-const url = 'http://localhost:3000';
+const url = 'http://localhost:8080';
+// const url = 'http://localhost:3000';
 let resultado = ''
 let resultadoSub = ''
 let subtarea = {};
@@ -31,7 +31,9 @@ async function crearList(lista) {
             })
         },
             res = await fetch(`${url}/task`, options)
-            json = await res.json();
+            // json = await res.json();
+            location.reload();
+
         mostrarList();
     } else {
         alert("ingrese una tarea por favor!")
@@ -66,32 +68,32 @@ const mostrar = (listas) => {
                     <button class="eliminar btn btn-danger" type="button" id="eliminar${sub.id}" >Eliminar</button>
                 </td>
             </tr>`
-        })
-        resultado += ` <hr>
-        <div  id="${lista.id}">
+        });
+            resultado += ` <hr>
+            <div  id="${lista.id}">
             <div class="input-group " id = "${lista.id}">
-                <h3 id="nombre-lista">Tarea : ${lista.name}</h3>
-                <button class="EliminarTarea btn btn-danger" type="submit" id="borrar${lista.id}" ">Eliminar</button>
+            <h3 id="nombre-lista">Tarea : ${lista.name}</h3>
+            <button class="EliminarTarea btn btn-danger" type="submit" id="borrar${lista.id}" ">Eliminar</button>
             </div>
             <input class="form-control me-sm-2" type="text" id="inputTarea${lista.id}" placeholder="¿Que piensas hacer?">
             <button class="agregarSubList btn btn-success my-2 my-sm-0" type="submit" id="crear${lista.id}" value="${lista.id}">Crear</button>
             <button style="display:none;" class="actualizarSubList btn btn-success my-2 my-sm-0" type="submit" id="Actualizar${lista.id}" value="${lista.id}">Actualizar</button>
             <br>
             <table class="table" id="${lista.id}">
-                <thead>
-                    <tr>
-                    <th>ID</th>
-                    <th>Tarea</th>
-                    <th>¿completado?</th>
-                    <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${resultadoSub}
-                </tbody>
+            <thead>
+            <tr>
+            <th>ID</th>
+            <th>Tarea</th>
+            <th>¿completado?</th>
+            <th>Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${resultadoSub}
+            </tbody>
             </table>
-        </div>
-        `
+            </div>
+            `
     });
     document.querySelector('.tbody1').innerHTML = resultado;
     resultado = "";
