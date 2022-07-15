@@ -14,7 +14,7 @@ public class ListController {
         @Autowired
         private ListService listRepository;
 
-        @GetMapping(value = "/listas")
+        @GetMapping(path = "/listas")
         public Iterable<ListModel> list(){
             return listRepository.list();
         }

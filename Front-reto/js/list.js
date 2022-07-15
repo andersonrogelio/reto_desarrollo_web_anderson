@@ -5,7 +5,6 @@ const d = document,
     body = d.querySelector('.tbody1'),
     $input = d.getElementById('inputTarea').value
 const url = 'http://localhost:8080';
-// const url = 'http://localhost:3000';
 let resultado = ''
 let resultadoSub = ''
 let subtarea = {};
@@ -16,6 +15,7 @@ $crear.addEventListener('click', e => {
     // console.log($crear);
     e.preventDefault();
     crearList(d.getElementById('inputTarea').value)
+    d.getElementById('inputTarea').value= "";
 
 });
 //Funcion crear lista , consulta la ruta del fetch y realiza el metodo post con los datos 
@@ -31,8 +31,7 @@ async function crearList(lista) {
             })
         },
             res = await fetch(`${url}/task`, options)
-            // json = await res.json();
-            location.reload();
+            console.log(`${url}/task`, options);
 
         mostrarList();
     } else {
@@ -55,7 +54,7 @@ const mostrar = (listas) => {
 
     listas.forEach(lista => {
         resultadoSub = ''
-        lista.listTask.forEach(sub => {
+        lista.listTask.forEach((sub) => {
             resultadoSub += ` <tr>
                 <td class="id">${sub.id}</td>
                 <td class="Tarea">${sub.name}</td>
@@ -101,13 +100,13 @@ const mostrar = (listas) => {
 
 
 body.addEventListener("click", (e) => {
-    console.log(e.target.parentElement.parentElement.id);
+    console.log(e.target.parentElement.parentElement);
     if (e.target.classList[0] == "EliminarTarea") {
         eliminarTarea(e.target.parentElement.parentElement.id)
     }
     if (e.target.classList[0] == "agregarSubList") {
 
-        //console.log(e.path[0].value);
+        console.log(e.path[0]);
         let dato = {
             nombre: e.target.previousElementSibling.value,
             id: e.path[0].value
@@ -174,7 +173,7 @@ async function eliminarTarea(id) {
 }
 //Crear SubTarea
 async function crearSubLista({ nombre, id }) {
-    if (nombre) {
+    if (nombre != "") {
         let options = {
             method: "POST",
             headers: {
@@ -196,10 +195,6 @@ async function crearSubLista({ nombre, id }) {
 }
 //eliminar subTarea
 async function eliminarSubTarea(id) {
-    // let options = {
-        // method: "DELETE",
-        
-    // mostrarList()
         let options = {
             method: "DELETE",
             headers: {
@@ -215,7 +210,6 @@ async function eliminarSubTarea(id) {
  * @param {*} id2 
  * @param {*} nombre 
  */
-
 
 
 

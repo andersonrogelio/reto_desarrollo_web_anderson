@@ -14,17 +14,17 @@ public class ListTaskController {
     @Autowired
     private ListTaskService listTaskService;
 
-    @GetMapping(value = "/listTasks")
+    @GetMapping(path = "/listTasks")
     public Iterable<ListTaskModel> list(){
         return listTaskService.list();
     }
 
-    @PostMapping(value = "/listTask")
+    @PostMapping(path = "/listTask")
     public ListTaskModel createListTask(@RequestBody ListTaskModel listTask){
         return listTaskService.createListTask(listTask);
     }
 
-    @PutMapping(value = "/listTask/{id}")
+    @PutMapping(path = "/listTask/{id}")
     public ListTaskModel updatelistTask(@RequestBody ListTaskModel listTask, @PathVariable(value="id") Long id ) {
         listTaskService.updateListTask(id, listTask);
         return null;
