@@ -185,8 +185,8 @@ async function crearSubLista({ nombre, id }) {
                 name: nombre,
                 listaid: {
                     id: id
-                }
-            })
+                },
+            }),
         },
             res = await fetch(`${url}/listTask`, options)
         mostrarList()
@@ -196,11 +196,19 @@ async function crearSubLista({ nombre, id }) {
 }
 //eliminar subTarea
 async function eliminarSubTarea(id) {
-    let options = {
-        method: "DELETE",
+    // let options = {
+        // method: "DELETE",
         
     // mostrarList()
-}
+        let options = {
+            method: "DELETE",
+            headers: {
+                "Content-type": "application/json; charset=utf-8"
+            },
+        },
+            res = await fetch(`${url}/listTask/delete/${id}`, options)
+        mostrarList()
+
 /**
  * Editar sub lista 
  * @param {*} id1 
