@@ -55,11 +55,14 @@ const mostrar = (listas) => {
     listas.forEach(lista => {
         resultadoSub = ''
         let completado;
+        let editar;
         lista.listTask.forEach((sub) => {
             if (sub.completed) {
-                completado = "checked"
+                completado = "checked";
+                editar = "disabled";
             }else{
-                completado = ""
+                completado = "";
+                editar = "";
             }
             resultadoSub += ` <tr>
                 <td class="id">${sub.id}</td>
@@ -69,7 +72,7 @@ const mostrar = (listas) => {
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                 </td>
                 <td class="opciones">
-                    <button class="editar btn btn-info" value="${sub.id}" type="button" id="editar${sub.id}" class="editar btn btn-secondary">Editar</button>
+                    <button class="editar btn btn-info" value="${sub.id}" type="button" id="editar${sub.id}" class="editar btn btn-secondary" ${editar}>Editar</button>
                     <button class="eliminar btn btn-danger" type="button" id="eliminar${sub.id}" >Eliminar</button>
                 </td>
             </tr>`
@@ -77,8 +80,8 @@ const mostrar = (listas) => {
             resultado += ` <hr>
             <div  id="${lista.id}">
             <div class="input-group " id = "${lista.id}">
-            <h3 id="nombre-lista">Tarea : ${lista.name}</h3>
-            <button class="EliminarTarea btn btn-danger" type="submit" id="borrar${lista.id}" ">Eliminar</button>
+            <h3 id="nombre-lista">Tarea : ${lista.name}    </h3>
+            <button class="EliminarTarea btn btn-danger mx-5" type="submit" id="borrar${lista.id}" ">Eliminar</button>
             </div>
             <input class="form-control me-sm-2" type="text" id="inputTarea${lista.id}" placeholder="¿Que piensas hacer?">
             <button style="display:block;" class="agregarSubList btn btn-success my-2 my-sm-0" type="submit" id="crear${lista.id}" value="${lista.id}">Crear</button>
