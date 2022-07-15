@@ -114,6 +114,20 @@ body.addEventListener("click", (e) => {
         crearSubLista(dato)
 
     }
+    if (e.target.classList[0] == "actualizarSubList") {
+
+        console.log(e.path[0]);
+        let dato = {
+            nombre: e.target.previousElementSibling.value,
+            id: e.path[0].value
+        }
+        actualizarSubLista(dato)
+        let btncrear = d.getElementById('crear' + e.path[4].id)
+        let boton = d.getElementById('Actualizar' + e.path[4].id)
+        btncrear.style.display = "";
+        boton.style.display = "none";
+
+    }
     
     /**
      * eliminar subtarea
@@ -134,6 +148,7 @@ body.addEventListener("click", (e) => {
         let input = e.path[5].children[1];
         let btncrear = d.getElementById('crear' + e.path[4].id)
         let boton = d.getElementById('Actualizar' + e.path[4].id)
+        console.log(boton);
         btncrear.style.display = "none";
         boton.style.display = "";
         console.log(e.path[4]);
@@ -188,6 +203,28 @@ async function crearSubLista({ nombre, id }) {
             }),
         },
             res = await fetch(`${url}/listTask`, options)
+        mostrarList()
+    } else {
+        alert("Ingrese una subLista porfavor!")
+    }
+}
+//Actualizar SubTarea
+async function actualizarSubLista(idtarea,{ nombre, id }) {
+    if (nombre) {
+        let options = {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({
+                completed: false,
+                name: nombre,
+                listaid: {
+                    id: id
+                },
+            }),
+        },
+            res = await fetch(`${url}/listTask/${idtarea}`, options)
         mostrarList()
     } else {
         alert("Ingrese una subLista porfavor!")

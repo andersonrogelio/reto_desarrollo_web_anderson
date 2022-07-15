@@ -14,9 +14,9 @@ public class ListTaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    @Column(unique = false, nullable = false)
+    @Column( nullable = false)
     private Boolean completed;
-    @Column(unique = false, nullable = false)
+    @Column( nullable = false)
     private String name;
 
 //    /**
