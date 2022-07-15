@@ -75,7 +75,7 @@ const mostrar = (listas) => {
             <button class="EliminarTarea btn btn-danger" type="submit" id="borrar${lista.id}" ">Eliminar</button>
             </div>
             <input class="form-control me-sm-2" type="text" id="inputTarea${lista.id}" placeholder="¿Que piensas hacer?">
-            <button class="agregarSubList btn btn-success my-2 my-sm-0" type="submit" id="crear${lista.id}" value="${lista.id}">Crear</button>
+            <button style="display:block;" class="agregarSubList btn btn-success my-2 my-sm-0" type="submit" id="crear${lista.id}" value="${lista.id}">Crear</button>
             <button style="display:none;" class="actualizarSubList btn btn-success my-2 my-sm-0" type="submit" id="Actualizar${lista.id}" value="${lista.id}">Actualizar</button>
             <br>
             <table class="table" id="${lista.id}">
@@ -115,17 +115,19 @@ body.addEventListener("click", (e) => {
 
     }
     if (e.target.classList[0] == "actualizarSubList") {
-
-        console.log(e.path[0]);
-        let dato = {
-            nombre: e.target.previousElementSibling.value,
-            id: e.path[0].value
-        }
-        actualizarSubLista(dato)
-        let btncrear = d.getElementById('crear' + e.path[4].id)
-        let boton = d.getElementById('Actualizar' + e.path[4].id)
-        btncrear.style.display = "";
-        boton.style.display = "none";
+        // let in = d.getElementById('inputTarea'+e.path[0].value);
+        if (d.getElementById('inputTarea'+e.path[0].value).value != "") {
+                subtarea.name = d.getElementById('inputTarea'+e.path[0].value).value;
+                console.log(e.target.previousElementSibling.value)
+                console.log(subtarea)
+                let btncrear = d.getElementById('crear' + e.path[0].value)
+                let boton = d.getElementById('Actualizar' + e.path[0].value)
+                btncrear.style.display = "block";
+                boton.style.display = "none";
+                actualizarSubLista(subtarea)
+    } else {
+        alert("Ingrese una subLista porfavor!")
+    }
 
     }
     
@@ -144,13 +146,13 @@ body.addEventListener("click", (e) => {
         subtarea.id = e.path[0].value
         subtarea.name = e.path[2].children[1].textContent;
         subtarea.idpadre = e.path[4].id;
+        console.log(e.path[4].id);
 
         let input = e.path[5].children[1];
         let btncrear = d.getElementById('crear' + e.path[4].id)
         let boton = d.getElementById('Actualizar' + e.path[4].id)
-        console.log(boton);
         btncrear.style.display = "none";
-        boton.style.display = "";
+        boton.style.display = "block";
         console.log(e.path[4]);
         input.value = subtarea.name
     }
@@ -188,7 +190,7 @@ async function eliminarTarea(id) {
 }
 //Crear SubTarea
 async function crearSubLista({ nombre, id }) {
-    if (nombre != "") {
+    if (nombre) {
         let options = {
             method: "POST",
             headers: {
@@ -209,26 +211,23 @@ async function crearSubLista({ nombre, id }) {
     }
 }
 //Actualizar SubTarea
-async function actualizarSubLista(idtarea,{ nombre, id }) {
-    if (nombre) {
-        let options = {
-            method: "PUT",
-            headers: {
-                "Content-type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({
-                completed: false,
-                name: nombre,
-                listaid: {
-                    id: id
-                },
-            }),
+async function actualizarSubLista(subtarea) {
+
+    let options = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json; charset=utf-8"
         },
-            res = await fetch(`${url}/listTask/${idtarea}`, options)
-        mostrarList()
-    } else {
-        alert("Ingrese una subLista porfavor!")
-    }
+        body: JSON.stringify({
+            completed: false,
+            name: subtarea.name,
+            listaid: {
+                id: subtarea.idpadre
+            },
+        }),
+    },
+        res = await fetch(`${url}/listTask/${subtarea.id}`, options)
+    mostrarList()
 }
 //eliminar subTarea
 async function eliminarSubTarea(id) {
