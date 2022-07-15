@@ -14,17 +14,17 @@ public class ListTaskController {
     @Autowired
     private ListTaskService listTaskService;
 
-    @GetMapping(path = "/listTasks")
+    @GetMapping(value = "/listTasks")
     public Iterable<ListTaskModel> list(){
         return listTaskService.list();
     }
 
-    @PostMapping(path = "/listTask")
+    @PostMapping(value = "/listTask")
     public ListTaskModel createListTask(@RequestBody ListTaskModel listTask){
         return listTaskService.createListTask(listTask);
     }
 
-    @PutMapping(path = "/listTask/{id}")
+    @PutMapping(value = "/listTask/{id}")
     public ListTaskModel updatelistTask(@RequestBody ListTaskModel listTask, @PathVariable(value="id") Long id ) {
         listTaskService.updateListTask(id, listTask);
         return null;
@@ -35,8 +35,8 @@ public class ListTaskController {
      * Revisa si esto que propongo está bien o no, si no está bien ¿Como lo solucionas?
      */
 
-    // @DeleteMapping(path = "/listTask/{id}")
-    // public void deletelistTask(@PathVariable("id")Long id){
-       // listTaskService.deleteListTask(id);
-    //}
-//}
+     @DeleteMapping(value = "/listTask/{id}")
+     public void deletelistTask(@PathVariable("id")Long id){
+        listTaskService.deleteListTask(id);
+    }
+}

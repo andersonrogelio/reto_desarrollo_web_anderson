@@ -2,7 +2,7 @@ package com.sofka.Software.controller;
 
 import com.sofka.Software.models.ListModel;
 import com.sofka.Software.services.ListService;
-//import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
