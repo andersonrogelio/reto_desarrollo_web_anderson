@@ -54,12 +54,18 @@ const mostrar = (listas) => {
 
     listas.forEach(lista => {
         resultadoSub = ''
+        let completado;
         lista.listTask.forEach((sub) => {
+            if (sub.completed) {
+                completado = "checked"
+            }else{
+                completado = ""
+            }
             resultadoSub += ` <tr>
                 <td class="id">${sub.id}</td>
                 <td class="Tarea">${sub.name}</td>
                 <td class="completado">
-                    <input class="validar form-check-input" id="validar${sub.id}" type="checkbox" id="flexSwitchCheckDefault">
+                    <input class="validar form-check-input" id="validar${sub.id}" type="checkbox" id="flexSwitchCheckDefault" ${completado}>
                     <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                 </td>
                 <td class="opciones">
@@ -160,13 +166,19 @@ body.addEventListener("click", (e) => {
      * function validar , verifica el estado del check para cambiar el estado del boton editar
      */
     if (e.target.classList[0] == "validar") {
-        console.log(e.path[2].children[3].children[0].value);
+        // console.log(e.path[2].children[3].children[0].value);
         let btnvalidar = d.getElementById('editar' + e.path[2].children[3].children[0].value)
         let check = d.getElementById('validar' + e.path[2].children[3].children[0].value).checked
+        subtarea.id =parseInt(e.path[2].children[0].textContent);
+        subtarea.name = e.path[2].children[1].textContent;
+        subtarea.idpadre = e.path[4].id;
+        console.log(subtarea);
         if (check) {
             btnvalidar.disabled = true;
+            actualizarSubListaCompletada(subtarea,true);
         } else {
             btnvalidar.disabled = false;
+            actualizarSubListaCompletada(subtarea,false);
         }
 
     }
@@ -211,15 +223,18 @@ async function crearSubLista({ nombre, id }) {
     }
 }
 //Actualizar SubTarea
-async function actualizarSubLista(subtarea) {
-
+async function actualizarSubLista(isComplete) {
+    // subtarea.id = e.path[0].value
+    // subtarea.name = e.path[2].children[1].textContent;
+    // subtarea.idpadre = e.path[4].id;
+    // console.log(subtarea);
     let options = {
         method: "PUT",
         headers: {
             "Content-type": "application/json; charset=utf-8"
         },
         body: JSON.stringify({
-            completed: false,
+            completed: isComplete,
             name: subtarea.name,
             listaid: {
                 id: subtarea.idpadre
@@ -228,6 +243,25 @@ async function actualizarSubLista(subtarea) {
     },
         res = await fetch(`${url}/listTask/${subtarea.id}`, options)
     mostrarList()
+}
+//Actualizar SubTarea
+async function actualizarSubListaCompletada(subtarea,isCompleted) {
+
+    let options = {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify({
+            completed: isCompleted,
+            name: subtarea.name,
+            listaid: {
+                id: subtarea.idpadre
+            },
+        }),
+    },
+        res = await fetch(`${url}/listTask/${subtarea.id}`, options)
+    // mostrarList()
 }
 //eliminar subTarea
 async function eliminarSubTarea(id) {
