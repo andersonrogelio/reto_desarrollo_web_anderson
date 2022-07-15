@@ -30,12 +30,12 @@ public class ListTaskController {
         return null;
     }
 
-    /**
-     *
-     * Revisa si esto que propongo está bien o no, si no está bien ¿Como lo solucionas?
-     */
+//    /**
+//     *
+//     * Revisa si esto que propongo está bien o no, si no está bien ¿Como lo solucionas?
+//     */
 
-     @DeleteMapping(value = "/listTask/{id}")
+     @DeleteMapping(value = "/listTask/delete/{id}")
      public void deletelistTask(@PathVariable("id")Long id){
         listTaskService.deleteListTask(id);
     }
