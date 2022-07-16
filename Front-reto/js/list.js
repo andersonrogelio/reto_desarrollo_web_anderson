@@ -226,7 +226,7 @@ async function crearSubLista({ nombre, id }) {
     }
 }
 //Actualizar SubTarea
-async function actualizarSubLista(isComplete) {
+async function actualizarSubLista(subtarea) {
     // subtarea.id = e.path[0].value
     // subtarea.name = e.path[2].children[1].textContent;
     // subtarea.idpadre = e.path[4].id;
@@ -237,7 +237,7 @@ async function actualizarSubLista(isComplete) {
             "Content-type": "application/json; charset=utf-8"
         },
         body: JSON.stringify({
-            completed: isComplete,
+            completed: false,
             name: subtarea.name,
             listaid: {
                 id: subtarea.idpadre
